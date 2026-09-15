@@ -6,25 +6,11 @@ public class Journal
 {
     public List<Entry> _entries = new List<Entry>();
 
-    private List<string> _prompts = new List<string>
-    {
-        "Who was the most interesting person I interacted with today?",
-        "What was the best part of my day?",
-        "How did I see the hand of the Lord in my life today?",
-        "What was the strongest emotion I felt today?",
-        "If I had one thing I could do over today, what would it be?",
-        "What is something new I learned today?",
-        "What is something I am grateful for today?",
-        "What made me smile today?",
-        "What is one goal I want to accomplish tomorrow?"
-    };
+    private PromptGenerator _promptGenerator = new PromptGenerator();
 
     public void WriteEntry()
     {
-        Random random = new Random();
-
-        int index = random.Next(_prompts.Count);
-        string prompt = _prompts[index];
+        string prompt = _promptGenerator.GetRandomPrompt();
 
         Console.WriteLine();
         Console.WriteLine($"Prompt: {prompt}");
@@ -71,6 +57,7 @@ public class Journal
             }
         }
 
+        Console.WriteLine();
         Console.WriteLine("Journal saved successfully!");
     }
 
@@ -78,6 +65,7 @@ public class Journal
     {
         if (!File.Exists(filename))
         {
+            Console.WriteLine();
             Console.WriteLine("File not found.");
             return;
         }
@@ -102,6 +90,7 @@ public class Journal
             }
         }
 
+        Console.WriteLine();
         Console.WriteLine("Journal loaded successfully!");
     }
 }
